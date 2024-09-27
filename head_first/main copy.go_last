@@ -1,0 +1,1141 @@
+package main
+
+import (
+	//"bufio"
+	"errors"
+	"fmt"
+
+	//"strings"
+
+	//"greeting"
+	//"greeting"
+	//"head/essential/file"
+	"head/essential/arithmetic"
+	"head/essential/calendar"
+	"head/essential/compare"
+	"head/essential/datafile"
+	"head/essential/elects"
+	"head/essential/gadget"
+	"head/essential/game"
+	"head/essential/geo"
+	"head/essential/hello"
+	"head/essential/keyboard"
+	"head/essential/magazine"
+	"head/essential/negate"
+	"head/essential/prose"
+	"head/essential/readfile"
+	"head/essential/readfile2"
+	"head/essential/sum"
+
+	//"head/essential/robot"
+	"head/essential/vehicle"
+	"log"
+	"math"
+	"os"
+	"reflect"
+	"sort"
+
+	/* "strconv"
+	"strings" */
+	"time"
+	//"golang.org/x/tools/go/analysis/passes/stringintconv"
+	/* "head/essential/exc1"
+	"strings" */)
+
+func testTwo() (int, string) {
+	return 1, "test"
+}
+
+func Par(arg int) func(int) int {
+	return func(mult int) int {
+		return arg * mult
+	}
+}
+
+type Animal struct {
+	name string
+	age  int32
+}
+
+func (a Animal) getAnimal() (string, int) {
+	return a.name, int(a.age)
+}
+
+func squareRoot(number *float64) (float64, error) {
+	//fmt.Println(*number)
+	if *number < 0 {
+		return 0, fmt.Errorf("can't get square root of negative number")
+	}
+	return math.Sqrt(*number), nil
+}
+
+func divide(dividend float64, divisor float64) (float64, error) {
+	if divisor == 0.0 {
+		return 0, errors.New("can't divide by 0")
+	}
+	return dividend / divisor, nil
+}
+
+func paintNeeded(width float64, height float64) (area_calc float64, result string, err error) {
+	err = nil
+	if height < 0 || width < 0 {
+		err = errors.New("value cannot be negative")
+		//return 0, "success", err
+		//log.Fatal("Value cannot be negative")
+	}
+	area := width * height
+	//err := errors.New()
+
+	return area / 10.0, "success", err
+	//fmt.Println("test");
+}
+
+func double(number *float64) float64 {
+	*number *= 2
+	//fmt.Println(*number * 2)
+	return *number
+
+}
+
+func createPointer(num int) *int {
+	return &num
+}
+
+func getArg(many_args ...string) {
+	fmt.Println(many_args)
+}
+
+func myMAx(args ...int) int {
+	max := args[0]
+	for _, value := range args {
+		if value > max {
+			max = value
+		}
+	}
+
+	return max
+}
+
+func myMAxAvar(args ...int) (int, float64) {
+	max := args[0]
+	sum := 0
+	for _, value := range args {
+		if value > max {
+			max = value
+		}
+		sum += value
+	}
+
+	return max, float64(sum / len(args))
+}
+
+func inRange(min float64, max float64, numbers ...float64) []float64 {
+	var result []float64
+	for _, number := range numbers {
+		if number >= min && number <= max {
+			result = append(result, number)
+		}
+	}
+	return result
+}
+
+type subscriber struct {
+	name   string
+	rate   float64
+	active bool
+}
+
+type student struct {
+	name  string
+	grade float32
+}
+
+func printInfoS(s student) {
+	fmt.Printf("Name %s\nGrade %f\n", s.name, s.grade)
+}
+
+type car struct {
+	name     string
+	topSpeed float64
+}
+
+func nitroBoost(c *car) {
+	c.topSpeed += 50
+}
+
+type part struct {
+	description string
+	count       int
+}
+
+func (p *part) setCount(val int) {
+	p.count = val * p.count
+}
+
+func doublePack(p *part) {
+	p.count *= 2
+}
+
+func (l Loc) getLoc() Loc {
+	return l
+}
+
+type Loc int
+
+type Liters float64
+type Gallons float64
+type Milliliters float64
+
+func (l Liters) ToGallons() Gallons {
+	return Gallons(l * 0.264)
+}
+func (m Milliliters) ToGallons() Gallons {
+	return Gallons(m * 0.000264)
+}
+
+func (g Gallons) ToLiters() Liters {
+	return Liters(g * 3.785)
+}
+func (g Gallons) ToMilliliters() Milliliters {
+	return Milliliters(g * 3785.41)
+}
+
+func (l Liters) getLiters() Liters {
+	return l
+}
+
+func (l Liters) ToMilliliters() Milliliters {
+	return Milliliters(l * 1000)
+}
+
+func (m Milliliters) ToLiters() Liters {
+	return Liters(m / 1000)
+}
+
+func (l *Liters) setLiters(val float32) {
+	*l = Liters(val)
+	//return
+}
+
+// Imports, type declarations omitted
+func ToGallons(l Liters) Gallons {
+	return Gallons(l * 0.264)
+}
+func ToLiters(g Gallons) Liters {
+	return Liters(g * 3.785)
+}
+
+type Number int
+
+func (n Number) Add(val int) {
+	fmt.Printf("%d + %v = %d\n", n, val, val+int(n))
+}
+
+func (n *Number) AddP(val int) {
+	*n = *n + Number(val)
+}
+
+func (n Number) Substrcat(val int) {
+	fmt.Printf("%d - %v = %d\n", n, val, int(n)-val)
+}
+
+func (n *Number) Double() {
+	*n *= 2
+}
+
+type myinterface interface {
+	//name string
+	getAge() int
+	//name string
+	//getName() string
+}
+
+type Animal2 struct {
+	name string
+	age  int
+}
+
+func (a Animal2) getAge() int {
+	return a.age
+}
+
+type Human struct {
+	name string
+	age  int
+}
+
+func (h Human) getAge() int {
+	return h.age
+}
+
+func playList(device gadget.Player, songs []string) {
+	for _, song := range songs {
+		device.Play(song)
+
+		//device.Record()
+	}
+	device.Stop()
+}
+
+func TryOut(player gadget.Player) {
+	player.Play("Test Track")
+	player.Stop()
+
+	recorder, ok := player.(gadget.TapeRecorder)
+	if ok {
+		recorder.Record()
+	} else {
+		fmt.Println("Err! Player was not a TapeRecorder")
+	}
+	//player.Record()
+}
+
+type Robot string
+
+func (r Robot) MakeSound() {
+	fmt.Println("Beep Boop")
+}
+func (r Robot) Walk() {
+	fmt.Println("Powering legs")
+}
+
+type NoiseMaker interface {
+	MakeSound()
+}
+
+type ComedyError string
+
+func (c ComedyError) Error() string {
+	return string(c)
+}
+
+type OverheatError float64
+
+func (o OverheatError) Error() string {
+	return fmt.Sprintf("Overheating by %0.2f degrees!", o)
+}
+func checkTemperature(actual float64, safe float64) error {
+	excess := actual - safe
+	if excess > 0 {
+		return OverheatError(excess)
+	}
+	return nil
+}
+
+
+
+func main() {
+
+
+	fmt.Println("test def")
+	os.Exit(0)
+
+	//errf, flts := sum.GetFloats("sum/sums.txt");
+	//fmt.Println(os.Args)
+	errf, flts := sum.GetFloats(os.Args[1])
+	sumf := 0
+	if errf != nil {
+		log.Fatal(errf.Error())
+	} else {
+		for _, value := range flts {
+			sumf += int(value)
+		}
+		fmt.Println("sum =", sumf)
+	}
+
+	os.Exit(0)
+
+	ch := checkTemperature(120, 100)
+	if ch != nil {
+		log.Fatal(ch)
+	}
+
+	var erri error
+	erri = ComedyError("What's a programmer's favorite beer? Logger!")
+	fmt.Println(erri)
+	os.Exit(0)
+
+	/* var nm robot.NoiseMaker = robot.Robot("vasa")
+	nm.MakeSound()
+	rb := nm.(robot.Robot)
+	rb.Walk() */
+
+	errm := fmt.Errorf("a height of %0.2f is invalid", -2.33333)
+	fmt.Println(errm.Error())
+	fmt.Println(errm)
+
+	TryOut(gadget.TapeRecorder{})
+	TryOut(gadget.TapePlayer{})
+
+	var v3 vehicle.Vehicle = vehicle.Car("My car")
+	vehicle.TryVehicle(v3)
+	v3 = vehicle.Truck("My Truck")
+	vehicle.TryVehicle(v3)
+
+	os.Exit(0)
+
+	var vehicle2 vehicle.Vehicle = vehicle.Car("Toyoda Yarvic")
+	vehicle2.Accelerate()
+	vehicle2.Steer("left")
+
+	vehicle1 := vehicle.Truck("Fnord F180")
+	vehicle1.Brake()
+	vehicle1.Steer("right")
+
+	mixtape := []string{"Jessie's Girl", "Whip It", "9 to 5"}
+	var player gadget.Player = gadget.TapePlayer{}
+	playList(player, mixtape)
+	player = gadget.TapeRecorder{}
+	playList(player, mixtape)
+
+	beings := []myinterface{
+		Animal2{name: "tiger", age: 12},
+		Human{name: "Vasya", age: 52},
+	}
+
+	for _, value := range beings {
+		fmt.Printf("Age of %v is %d\n", value, value.getAge())
+	}
+
+	ev := calendar.Event{
+		/* Title: "New Event",
+		Date:  calendar.Date{}, */
+	}
+	//everr := ev.SetTitle("An extremely long and impractical title")
+	everr := ev.SetTitle("impractical title")
+	if everr != nil {
+		log.Fatal(everr)
+	}
+	everr = ev.SetDay(30)
+	if everr != nil {
+		log.Fatal(everr)
+	}
+	everr = ev.SetMonth(3)
+	if everr != nil {
+		log.Fatal(everr)
+	}
+	everr = ev.SetYear(1930)
+	if everr != nil {
+		log.Fatal(everr)
+	}
+	fmt.Println(ev.Title())
+	fmt.Println(ev.Day())
+	fmt.Println(ev.Month())
+	fmt.Println(ev.Year())
+
+	/* my_aarr := []string{"ss", "ddd"}
+	fmt.Println(append(my_aarr, "rewrqwr")) */
+
+	/* coordinates := geo.Coordinates{}
+	coordinates.SetLatitude(37.42)
+	coordinates.SetLongitude(-122.08)
+	fmt.Println(coordinates) */
+
+	coordinates := geo.Coordinates{}
+	errc := coordinates.SetLatitude(37.42)
+	if errc != nil {
+		log.Fatal(errc)
+	}
+	errc = coordinates.SetLongitude(-112.08)
+	if errc != nil {
+		log.Fatal(errc)
+	}
+	fmt.Println(coordinates.Latitude())
+	fmt.Println(coordinates.Longitude())
+
+	al := Loc(10)
+	fmt.Println(al)
+	fmt.Println(al.getLoc())
+
+	location := geo.Landmark{}
+	locerr := location.SetName("Geo plexx")
+	if locerr != nil {
+		log.Fatal(locerr)
+	}
+
+	location.SetLatitude(60.32)
+	location.SetLongitude(123.32)
+	fmt.Println(location.Name())
+	fmt.Println(location.Latitude())
+	fmt.Println(location.Longitude())
+
+	date := calendar.Date{}
+	errd := date.SetYear(2019)
+	if errd != nil {
+		log.Fatal(errd)
+	}
+	errd = date.SetMonth(5)
+	if errd != nil {
+		log.Fatal(errd)
+	}
+	errd = date.SetDay(27)
+	if errd != nil {
+		log.Fatal(errd)
+	}
+	fmt.Println(date.Year())
+	fmt.Println(date.Month())
+	fmt.Println(date.Day())
+
+	os.Exit(0)
+
+	rres, errr := arithmetic.GetRand()
+	if errr != nil {
+		fmt.Println(errr.Error())
+	} else {
+		fmt.Println(rres)
+	}
+
+	l1 := Liters(3)
+	fmt.Printf("%0.1f liters is %0.1f milliliters\n", l1, l1.ToMilliliters())
+	ml := Milliliters(500)
+	fmt.Printf("%0.1f milliliters is %0.1f liters\n", ml, ml.ToLiters())
+
+	milk := Gallons(2)
+	fmt.Printf("%0.3f gallons equals %0.3f liters\n", milk, milk.ToLiters())
+	fmt.Printf("%0.3f gallons equals %0.3f milliliters\n", milk, milk.ToMilliliters())
+
+	soda := Liters(2)
+	fmt.Printf("%0.3f liters equals %0.3f gallons\n", soda, soda.ToGallons())
+	water := Milliliters(500)
+	fmt.Printf("%0.3f milliliters equals %0.3f gallons\n", water, water.ToGallons())
+
+	num := Number(12)
+
+	num.Add(234)
+	num.AddP(234)
+	fmt.Println(num)
+	num.Substrcat(234)
+	num.Double()
+	fmt.Println(num)
+
+	carFuel := Gallons(1.2)
+	busFuel := Liters(4.5)
+	carFuel += ToGallons(Liters(40.0))
+	busFuel += ToLiters(Gallons(30.0))
+	fmt.Printf("Car fuel: %0.1f gallons\n", carFuel)
+	fmt.Printf("Bus fuel: %0.1f liters\n", busFuel)
+
+	os.Exit(0)
+
+	val11 := "test"
+	pval := &val11
+	fmt.Println("val=", val11)
+	*pval = "changed"
+	fmt.Println("val=", val11)
+
+	l := Liters(2.45)
+	fmt.Println(l.getLiters())
+	l.setLiters(35.35)
+	fmt.Println(l.getLiters())
+	os.Exit(0)
+
+	m_res, err_m := arithmetic.GetRand()
+
+	if err_m != nil {
+		fmt.Println(err_m.Error())
+	}
+
+	fmt.Println(m_res)
+	//os.Exit(0)
+
+	fmt.Println(compare.Larger(5, 10))
+
+	phrases := []string{"my parents", "a rodeo clown"}
+	fmt.Println("A photo of", prose.JoinWithCommas(phrases))
+	phrases = []string{"my parents", "a rodeo clown", "a prize bull"}
+	fmt.Println("A photo of", prose.JoinWithCommas(phrases))
+
+	phrases = []string{"my parents"}
+	fmt.Println("A photo of", prose.JoinWithCommas(phrases))
+
+	phrases = []string{}
+	fmt.Println("A photo of", prose.JoinWithCommas(phrases))
+
+	/* var fuses part
+	fuses.description = "Fuses"
+	fuses.count = 5
+	doublePack(&fuses)
+	fmt.Println(fuses.description)
+	fmt.Println(fuses.count)
+	fuses.setCount(12);
+	fmt.Println(fuses.count)
+	os.Exit(0)
+
+	var mustang car
+	mustang.name = "Mustang Cobra"
+	mustang.topSpeed = 225
+	nitroBoost(&mustang)
+	fmt.Println(mustang.name)
+	fmt.Println(mustang.topSpeed)
+	os.Exit(0) */
+
+	/* st := student {
+		"Alonzo Cole",
+		92.3,
+	}
+	printInfoS(st) */
+
+	/* subscriber1 := defaultSubscriber("Aman Singh")
+	subscriber1.rate = 4.99
+	printInfo(subscriber1)*/
+	subscriber2 := magazine.DefaultSubscriber("Beth Ryan")
+	magazine.PrintInfo(subscriber2)
+
+	//magazine.Subscriber
+
+	subscriber3 := magazine.Subscriber{
+		Rate: 23.34, Active: true, Name: "Vasya",
+		/* 	Street:     "Gorky",
+		City:       "Alchevsk",
+		State:      "Lugansk",
+		PostalCode: "31412214", */
+
+	}
+
+	magazine.ApplyDiscount(&subscriber3)
+
+	subscriber3.City = "Moskow"
+	subscriber3.Street = "Pushkin str"
+	subscriber3.State = "Moskovskaya"
+	subscriber3.PostalCode = "312141124"
+	magazine.PrintInfo(&subscriber3)
+	os.Exit(0)
+
+	fmt.Println(subscriber3)
+
+	//subscriber1.getSubscriber()
+
+	/*
+		var subscriber struct {
+			name   string
+			rate   float64
+			active bool
+		}
+		subscriber.name = "Aman Singh"
+		subscriber.rate = 4.99
+		subscriber.active = true
+		fmt.Println("Name:", subscriber.name)
+		fmt.Println("Monthly rate:", subscriber.rate)
+		fmt.Println("Active?", subscriber.active)
+
+		var pet struct {
+			name string
+			age  int
+		}
+		pet.name = "Max"
+		pet.age = 5
+		fmt.Println("Name:", pet.name)
+		fmt.Println("Age:", pet.age)
+
+		str := MyStruct{name: "test", age: 25, status: false}
+		fmt.Println(str)
+	*/
+
+	/* myStr{
+		"test", 25, false,
+	} */
+
+	//fmt.Println(myStr)
+
+	rank := map[string]int{"gold": 1, "silver": 2, "bronze": 3}
+
+	for i, val := range rank {
+		fmt.Printf("The %s medal's rank is %d\n", i, val)
+	}
+
+	//m := map[string]int{"Alice": 23, "Eve": 2, "Bob": 25}
+
+	// https://golangnote.com/map/sort-golang-map-by-keys-or-values
+	keys := make([]string, 0, len(rank))
+	for k := range rank {
+		keys = append(keys, k)
+	}
+
+	sort.SliceStable(keys, func(i, j int) bool {
+		return rank[keys[i]] < rank[keys[j]]
+	})
+
+	for _, k := range keys {
+		fmt.Println(k, rank[k])
+	}
+
+	/* values := make([]int, 0, len(rank))
+
+	   for _, value := range rank{
+	       values = append(values, value)
+	   }
+	   sort.Ints(values)
+
+	   for _, k := range values {
+	       fmt.Println(k, rank[k])
+	   }
+	*/
+
+	numbers3 := make(map[string]string)
+
+	numbers3["test"] = "25"
+	fmt.Println(numbers3["new"], numbers3["test"])
+
+	filename1 := "elects.txt"
+	el_map, err3 := elects.ReadElect(filename1)
+	if err3 != nil {
+		fmt.Println(err3.Error())
+	}
+	fmt.Println(el_map)
+
+	for i, val := range el_map {
+		fmt.Println(i, " has a vote = ", val)
+	}
+
+	os.Exit(0)
+
+	lines, _, errs := datafile.GetStrings("votes.txt")
+	if errs != nil {
+		log.Fatal(errs)
+	}
+	//fmt.Println(lines)
+	//fmt.Println(electors)
+
+	////////////////////////////////////////
+	if errs != nil {
+		log.Fatal(errs)
+	}
+	var names []string
+	var counts []int
+	for _, line := range lines {
+		matched := false
+		for i, name := range names {
+			if name == line {
+				counts[i]++
+				matched = true
+			}
+		}
+		if !matched {
+			names = append(names, line)
+			counts = append(counts, 1)
+		}
+	}
+
+	fmt.Println("Результаты: ")
+	for i, name := range names {
+		fmt.Printf("%s: %d\n", name, counts[i])
+	}
+	////////////////////////////////////////
+
+	//os.Exit(0)
+
+	/* votes := map[string]int{}
+
+	file1, err1 := os.Open("votes.txt")
+	if err1 != nil {
+		log.Fatal("error file not found")
+	} else {
+		rf1 := bufio.NewScanner(file1)
+
+		votes_count := 1
+		for rf1.Scan() {
+
+			//fmt.Println(rf1.Text());
+			//votes_count++
+
+			elect := rf1.Text()   // Получаем строку
+			_, ok := votes[elect] // Проверяем наличие в массиве
+			if ok {               // Если же есть такой кандидат,
+				//fmt.Println("user: ", elect)
+				//fmt.Println("user elect_count: ", votes[elect])
+				votes[elect]++ // то увеличиваем значение голосов на 1
+			} else {
+				// Иначе задаем 1
+				votes[elect] = votes_count
+			}
+		}
+		err1 = file1.Close()
+	} */
+
+	votes, err1 := datafile.ReadFileMap("votes.txt")
+
+	if err1 == nil {
+		fmt.Println("Результаты using map: ", votes)
+	}
+
+	os.Exit(0)
+
+	nick := "nick"
+	fill := "fill"
+	mmap := map[string]int{
+		nick: 15,
+		fill: 20,
+	}
+
+	for ind, val := range mmap {
+		fmt.Printf("Ключ %s значение %d\n", ind, val)
+	}
+
+	//append(mmap, "tes")
+	fmt.Println(mmap)
+
+	os.Exit(0)
+
+	fmt.Println(inRange(1, 100, -12.5, 3.2, 0, 50, 103.5))
+	fmt.Println(inRange(-10, 10, 4.1, 12, -12, -5.2))
+
+	max := myMAx(1, 6, 33, 21, 76, 111)
+	fmt.Println("Max= ", max)
+
+	max, avar := myMAxAvar(1, 6, 33, 21, 76, 11)
+	fmt.Println("Max and av= ", max, avar)
+
+	m_slice := []int{2, 4, 6, 9, -12, 32, 11}
+	max2, avar2 := myMAxAvar(m_slice...)
+	fmt.Printf("Max2 = %d and av2 = %0.2f\n", max2, avar2)
+
+	getArg("ff", "22", "gg")
+
+	//readfile2.GetArgs();
+
+	// USE go run main.go 1 2 3 8 10 12
+
+	average := readfile2.GetArgsAverage()
+
+	fmt.Printf("Average: %0.2f\n", average)
+
+	os.Exit(0)
+
+	myarr := []string{"1", "dd", "ew"}
+	myarr = append(myarr, "dasdas")
+
+	myarr = make([]string, 5)
+
+	fmt.Println(myarr[4])
+
+	//slc2 := make([] string, 10);
+	//slc2 := [] string{"d", "c" , "e"};
+
+	array1 := [5]string{"a", "b", "c", "d", "e"}
+	slice1 := array1[2:5]
+
+	array1[2] = "CH"
+	fmt.Println(slice1)
+
+	barr := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+	slc := barr[:4]
+	fmt.Println(slc)
+
+	numbers := make([]float64, 3)
+	numbers[0] = 19.7
+	numbers[2] = 25.2
+	for i, number := range numbers {
+		fmt.Println(i, number)
+	}
+	var letters = []string{"a", "b", "c"}
+	for i, letter := range letters {
+		fmt.Println(i, letter)
+	}
+
+	os.Exit(0)
+
+	/* arr := [5] string
+	arr = make([5] string, 0) // invalid argument: cannot make [5]string; type must be slice, map, or channel
+	*/
+	//sl := [] bool{}
+
+	notes1 := make([]string, 7)
+	primes1 := make([]int, 5)
+	fmt.Println(len(notes1))
+	fmt.Println(len(primes1))
+
+	//var map2 map[string]string;
+	map2 := make(map[string]string, 10)
+	fmt.Println(map2, len(map2))
+
+	map1 := map[int]int{1: 1, 6: 4}
+	fmt.Println(map1, len(map1))
+
+	sl := make([]bool, 4)
+	fmt.Println(sl[3])
+
+	marr := [3]string{"aa", "bb"}
+	fmt.Println(marr)
+
+	numbers, err := readfile.ReadFile("data.txt")
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	fmt.Println(numbers)
+
+	sum1 := 0
+	for _, value := range numbers {
+		sum1 += int(value)
+	}
+	fmt.Printf("Average: %0.2f\n", float64(sum1)/float64(len(numbers)))
+
+	os.Exit(0)
+
+	notes := [8]string{"do", "re", "mi", "fa", "so", "la",
+		"ti", "zz",
+	}
+
+	var sum int = 0
+	for ind, value := range notes {
+		fmt.Println(value)
+		sum += ind
+	}
+
+	fmt.Println("sum=", sum)
+	fmt.Printf("Average: %0.2f\n", float64(sum)/float64(len(notes)))
+
+	fmt.Printf("%#v\n", notes)
+
+	fmt.Println(len(notes))
+	fmt.Println(notes)
+
+	var dates [3]time.Time
+	dates[0] = time.Unix(1257894000, 0)
+	dates[1] = time.Unix(1447920000, 0)
+	dates[2] = time.Unix(1508632200, 0)
+	dates[2] = time.Unix(int64(time.Millisecond), 0)
+	fmt.Println(dates[2])
+
+	var my_arr [3]bool
+
+	//my_arr = [3]bool{true, false, true}
+
+	fmt.Println(my_arr)
+
+	//fmt.Println(strings.Join(notes, "|"))
+
+	fmt.Println(reflect.TypeOf(my_arr))
+
+	hello.Main11()
+	os.Exit(0)
+
+	fmt.Println(keyboard.DaysInWeek)
+
+	const myConst = 10
+	fmt.Println(myConst)
+
+	res1, err1 := keyboard.GetFloat()
+	if err1 == nil {
+		fmt.Println("Your entered: ", res1)
+	} else {
+		fmt.Println(err1.Error())
+	}
+
+	mybln := true
+	fmt.Println(negate.Negate(&mybln))
+	fmt.Println(mybln)
+
+	crPoint := createPointer(17)
+	fmt.Println(crPoint)
+
+	var myInt int
+	var myIntPointer *int
+
+	myInt = 42
+	myIntPointer = &myInt
+	fmt.Println(myInt)
+	fmt.Println(*myIntPointer)
+	myInt = 33
+	fmt.Println(*myIntPointer)
+
+	/* var myInt int
+	fmt.Println(reflect.TypeOf(&myInt))
+	var myFloat float64
+	fmt.Println(reflect.TypeOf(&myFloat))
+	*/
+	var myBool bool
+	fmt.Println(reflect.TypeOf(&myBool))
+
+	amount := 6.0
+	fmt.Println("amount=", amount)
+	fmt.Println("Address of amount=", &amount)
+	double(&amount)
+
+	fmt.Println("amount=", amount)
+
+	quotient, err := divide(5.6, 3.0)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Printf("%0.2f\n", quotient)
+	}
+
+	val := 10.0
+	sqrtt, err := squareRoot(&val)
+	if err != nil {
+		log.Fatal("From log.Fatal:", err)
+	}
+	fmt.Println(sqrtt)
+
+	area, res, err := paintNeeded(4.2, 3.0)
+	if err != nil {
+		log.Fatal("From log.Fatal:", err)
+	}
+
+	fmt.Println("Paint needed", area, res)
+
+	area2, res2, err := paintNeeded(-4.2, 3.0)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Paint needed", area2, res2)
+	}
+	os.Exit(0)
+
+	var pointr *[]string
+	var pointrm *string
+
+	mess := "some mess"
+
+	pointrm = &mess
+
+	*pointrm = "Changed mess"
+	fmt.Println(pointrm)
+	fmt.Println(&mess)
+
+	//var arr []string = make([]string, 10);
+	arr := []string{"4", "6", "2"}
+	arr = append(arr, "10")
+	arr = append(arr, "15")
+	arr = append(arr, "15")
+
+	pointr = &arr
+
+	arr[0] = "stryy"
+
+	//*pointr = make([]string, 10);
+	//pointr[0] = 10;
+
+	fmt.Println(*pointr)
+
+	/* paintNeeded(5.2, 3.5)
+	paintNeeded(5.0, 3.3) */
+
+	arr1 := []string{"test", "ate", "make"}
+
+	for i, value := range arr1 {
+		fmt.Println(i, value)
+	}
+
+	fmt.Println(arr1)
+
+	fmt.Printf("A float: %0.3f\n", 3.1415)
+	fmt.Printf("An integer: %d\n", 15)
+	fmt.Printf("A string: %s\n", "hello")
+	fmt.Printf("A boolean: %t\n", false)
+	fmt.Printf("Values: %v %v %v\n", 1.2, "\t", true)
+	fmt.Printf("Values: %#v %#v %#v\n", 1.2, "\t", true)
+	fmt.Printf("Types: %T %T %T\n", 1.2, "\t", true)
+	fmt.Printf("Percent sign: %%\n")
+
+	fmt.Printf("%12s | %s\n", "Product", "Cost in Cents")
+	fmt.Println("-----------------------------")
+	fmt.Printf("%12s | %2d\n", "Stamps", 50)
+	fmt.Printf("%12s | %2d\n", "Paper Clips", 5)
+	fmt.Printf("%12s | %2d\n", "Tape", 99)
+
+	anim := Animal{
+		"lion",
+		15,
+	}
+
+	fmt.Println(anim)
+	name, age := anim.getAnimal()
+	fmt.Println(name, age)
+
+	p := Par(7)
+
+	fmt.Println(p(6))
+
+	game.Game()
+
+	os.Exit(0)
+
+	intvall, strvall := testTwo()
+	fmt.Println(intvall, strvall)
+
+	intvall, strvall2 := testTwo()
+	fmt.Println(intvall, strvall2)
+
+	/*
+		file.GetFileInfo()
+
+		var status string
+
+		fmt.Print("Enter a grade: ")
+		reader := bufio.NewReader(os.Stdin)
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		input = strings.TrimSpace(input)
+		grade_number, err := strconv.ParseInt(input, 16, 16)
+		if err != nil {
+			log.Fatal("Got an error: ", err)
+		}
+		if grade_number >= 60 {
+			status = "passing"
+		} else {
+			status = "failing"
+		}
+
+		fmt.Println(status)
+	*/
+	//fmt.Println(strings.Trim())
+
+	/* fmt.Print("Enter a grade: ")
+		reader := bufio.NewReader(os.Stdin)
+		grade, err := reader.ReadString('\n')
+		//input, _ := reader.ReadString('\n')
+		//fmt.Println(input)
+
+		if err != nil {
+			log.Fatal(err)
+			}
+			fmt.Println(grade)
+
+	    var i int
+		fmt.Print("Enter you real grade: ")
+		fmt.Scanf("%d", &i)
+
+		if i < 61 {
+			fmt.Println("Bad results")
+			//fmt.Println("Satisfactory")
+		} else if i > 61 && i <= 72 {
+			fmt.Println("Satisfactory")
+		}else if i > 72 {
+			fmt.Println("Very good")
+		}   */
+
+	/* broken_str := "G# r#cks!"
+
+	replace := strings.NewReplacer("#", "o")
+
+	fixed_str := replace.Replace(broken_str);
+	fmt.Println(fixed_str)
+
+	exc1.Exc()
+
+	//fmt.Println('H')
+
+	var length float64 = 1.2
+	width := 2.33
+	fmt.Println("Area is", length*width)
+	fmt.Println("length > width?", length > width)
+
+	a := 3
+	fmt.Println("Area is", 12.7*float32(a))
+
+	quantity, test, isEmpty := 4, "ttt", false
+	quantity = 4
+	fmt.Println(quantity, test, isEmpty)
+
+	originalCount, eatenCount := 10, 4
+
+	fmt.Println("I started with", originalCount, "apples")
+	fmt.Println("Some jerk ate", eatenCount, "apples")
+	fmt.Println("There are", originalCount-eatenCount, "apples left.") */
+}

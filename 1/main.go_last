@@ -1,0 +1,133 @@
+package main
+
+import (
+	//"errors"
+	"errors"
+	"fmt"
+	"log"
+)
+
+var v, s, l int
+
+func main() {
+	/* var message string
+	//message = "Super prog in GO!"
+
+	var new_var int
+	var num float32
+	var b bool
+	num = 1.4254
+	var bb byte
+	bb = 111 */
+	//zz := []byte("dafs")
+	//var c byte = 63
+	//var a rune = 'a'
+
+	v, s, l = 1, 3, 5
+	v, s = s, v
+
+	/* fmt.Println(message)
+	fmt.Println(new_var)
+	fmt.Println(num)
+	fmt.Println(b)
+	fmt.Println(bb)
+	fmt.Println(zz)
+	//fmt.Print("%c\n", c)
+	fmt.Println(a) */
+	fmt.Println(v, s, l)
+	/* fmt.Println(reflect.TypeOf(message))
+	fmt.Println(new_var) */
+
+	/*
+		dasdsafsd
+	*/
+	//Print()
+	printMessage("'fsg'")
+	printMessage("'fsg1'")
+	printMessage("'fsg12'")
+
+	name := sayMessage("'My name'", 17)
+	fmt.Println(name)
+
+	var age int
+	fmt.Println("Сколько тебе лет?")
+	fmt.Scanf("%d\n", &age)
+	fmt.Println("You've entered:", age)
+	mess, res := enterTheClub(age)
+	if res != nil {
+		//fmt.Println(mess)
+		fmt.Println(res.Error())
+		log.Fatal("VERY YOUNG")
+	} else {
+		fmt.Println(mess)
+	}
+
+	//fmt.Println(mess)
+	//fmt.Println(enterTheClub(20))
+
+	var day string
+	//fmt.Println("What is your name")
+	fmt.Println("Enter day of week")
+	fmt.Scanf("%s\n", &day)
+	pred, error := prediction(day)
+	if error != nil {
+		fmt.Println(pred)
+	}
+
+	//fmt.Println("Hello %s, ", z)
+	//fmt.Println(z)
+
+}
+
+// end main
+
+func Print() {
+	fmt.Println(v, s, l)
+}
+
+func printMessage(message string) {
+	fmt.Println(message)
+}
+
+func sayMessage(name string, age int) string {
+	return fmt.Sprintf("Hello %s, you are %d", name, age)
+	//return "Hello !! " + name
+}
+
+func enterTheClub(age int) (string, error) {
+	/*
+		switch age {
+		case 18:
+			return "You are very wellcome", nil
+		case 46:
+			return "It is very nood for you", errors.New("it is very nood for you !!!")
+
+		default:
+			return "Welcome to club", nil
+		}
+	*/
+
+	if age >= 18 && age < 45 {
+		return "You are very wellcome", nil
+	} else if age > 45 {
+		return "It is very nood for you", errors.New("it is very nood for you !!!")
+	} else if age < 18 {
+		return "You are not allowed", errors.New("You are too young !!!")
+	}
+
+	return "Welcome to club", nil
+	//return "dsf", false
+}
+
+func prediction(dayOfWeek string) (string, error) {
+	switch dayOfWeek {
+	case "пн":
+		return "Сегодня самый лучший понедельни", nil
+	case "вт":
+		return "Сегодня должен быть хороший день", nil //, errors.New("it is very nood for you !!!")
+	case "ср":
+		return "Отличная среда!!!", nil
+	default:
+		return "Неверный день недели", errors.New("Неверный день недели !!!")
+	}
+}

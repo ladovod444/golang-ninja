@@ -1,0 +1,131 @@
+package main
+
+import (
+	//"errors"
+
+	"fmt"
+	"math/rand/v2"
+)
+
+var v, s, l int
+
+var msg string
+
+var pointer *int
+
+var val = 2
+func init() {
+	msg = "sfsfsdfs"
+
+	
+	//*pointer = val
+
+	//*pointer = 5;
+}
+
+func main() {
+
+	//*pointer = val
+
+	//fmt.Println("pointer = ", &pointer)
+	//fmt.Println("val = ", val)
+
+	fmt.Println("msg = ", msg)
+
+	sum, min, max, avrg := myFunc(1, 2, 3, 4, 5, 6, 7, -1, 12, -10, -11)
+	fmt.Println("Sum = ", sum)
+
+	fmt.Println("Min = ", min)
+
+	fmt.Println("Max = ", max)
+
+	//var a = 5
+	fmt.Println("avrg = ", avrg)
+
+	var arr []int
+	for i := 0; i < 6; i++ {
+		r := rand.IntN(45)
+		found := contains(arr, r)
+		if !found && r != 0 {
+			fmt.Print(r, " ")
+		}
+		arr = append(arr, r)
+
+	}
+	fmt.Println("_______________", 'd')
+
+	an_func := func(arg int) int {
+		return arg * arg
+	}
+
+	fmt.Println(an_func(5))
+
+	fmt.Println(func(arg int) int {
+		return arg * arg
+	}(10))
+
+	fnc := Calc(5)
+
+	fmt.Println(fnc(10))
+
+	counter := inc_closure()
+
+	fmt.Println(counter())
+	fmt.Println(counter())
+	fmt.Println(counter())
+
+}
+
+func inc_closure() func() int {
+	count := 0
+
+	return func() int {
+		count++
+		return count
+	}
+}
+
+func contains(s []int, search int) bool {
+	//for i := 0; i <= len(s); i++ {
+	for _, i := range s {
+		if i == search {
+			return true
+		}
+	}
+
+	return false
+}
+
+func Calc(val int) func(int) int {
+	//i := 0
+	return func(v int) int {
+		//i++
+		return val + v
+	}
+}
+
+func myFunc(a ...int) (int, int, int, float64) {
+	if len(a) == 0 {
+		return 0, 0, 0, 0.0
+	}
+	var sum = 0
+	var min = a[0]
+	var max = a[0]
+	//for i := 0; i < len(a); i++ {
+	for _, i := range a {
+		/*sum += a[i]
+		if min > a[i] {
+			min = a[i]
+		}*/
+
+		sum += i
+		if min > i {
+			min = i
+		}
+		if max < i {
+			max = i
+		}
+	}
+	avrg := float64(sum) / float64(len(a))
+	return sum, min, max, avrg
+}

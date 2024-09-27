@@ -1,0 +1,4 @@
+github.com/zhashkevych/scheduler v1.0.0 h1:gEbSIPykQ6OHGo/F4jJoC2iQtzzwOAQ6U6T6nQoo3v8=
+github.com/zhashkevych/scheduler v1.0.0/go.mod h1:x9baACtHSUu78Jvzv7QytjJ9beTJUh6tCRAtYnKYh3c=
+golang.org/x/text v0.17.0 h1:XtiM5bkSOt+ewxlOE/aE/AKEHibwj/6gvWMl9Rsh0Qc=
+golang.org/x/text v0.17.0/go.mod h1:BuEKDfySbSR4drPmRPG/7iBdf8hvFMuRexcpahXilzY=

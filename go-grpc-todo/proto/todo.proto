@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package todo;
+
+option go_package = "proto3/todo";
+
+// The task service definition.
+service TaskManager {
+  // Adds a new task
+  rpc AddTask (Task) returns (TaskResponse) {}
+  // Lists all tasks
+  rpc ListTasks (ListRequest) returns (ListResponse) {}
+}
+
+// The task model
+message Task {
+  string id = 1;
+  string title = 2;
+  bool completed = 3;
+}
+
+// Response after adding a task
+message TaskResponse {
+  string id = 1; 
+  string result = 2;
+}
+
+// Request to list tasks
+message ListRequest {}
+
+// Response with list of tasks
+message ListResponse {
+  repeated Task tasks = 1;
+}

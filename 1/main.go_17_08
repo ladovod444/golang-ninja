@@ -1,0 +1,489 @@
+package main
+
+import (
+	//"errors"
+
+	"errors"
+	"fmt"
+	"golang-ninja/basic/mystruct"
+	"golang-ninja/basic/shape"
+	"golang-ninja/basic/user"
+	"reflect"
+
+	"math"
+
+	//"additional/mystruct"
+	//"os/user"
+	"os"
+	//"strings"
+
+	"github.com/zhashkevych/scheduler"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
+)
+
+var som_var string
+
+func init() {
+	som_var = "333"
+}
+
+func Par(arg int) func(int) int {
+	return func(mult int) int {
+		return arg * mult
+	}
+}
+
+func ParAn(arg int) func() int {
+	return func() int {
+		return arg * arg
+	}
+}
+
+func changeMess(mess *string) string {
+	*mess = *mess + "Changed mess"
+	return *mess
+}
+
+func printMess(mess []string) error {
+	if len(mess) == 0 {
+		return errors.New("Som error")
+	}
+
+	mess[1] = "testtts"
+	fmt.Println("printMess")
+	fmt.Println(mess)
+	return nil
+}
+
+func printMessages() {
+	messages1 := []string{
+		"mess 1",
+		"mess 2",
+		"mess 3",
+	}
+	fmt.Println(messages1)
+}
+
+func handlePanic() {
+	if r := recover(); r != nil {
+		fmt.Println("Err=", r)
+	}
+
+	fmt.Println("handlePanic выполнилаcь успешно")
+}
+
+type Entity struct {
+	id          int
+	title       string
+	description string
+}
+
+func NewEntity(id int, title string, description string) Entity {
+	return Entity{
+		id,
+		title,
+		description,
+	}
+}
+
+func (ent Entity) PrintEntity() {
+	fmt.Println(ent.id, ent.description, ent.title)
+}
+
+type DumpDatabase struct {
+	m map[string]string
+}
+
+func NewDumpDatabase() *DumpDatabase {
+	return &DumpDatabase{
+		make(map[string]string),
+	}
+}
+
+func PrintShapeArea(s shape.Shape) {
+	fmt.Println(s.Area())
+	fmt.Println(s.Perimeter())
+}
+
+func printInterface(i interface{}) {
+
+	/* switch value := i.(type) {
+	case int:
+		fmt.Println("int-", i, value)
+	case bool:
+		fmt.Println("bool-", i, value)
+	case Square:
+		fmt.Println("Square-", i, value)
+
+	case Circle:
+		fmt.Println("Circle-", i, value)
+	default:
+		fmt.Println("Unknown type")
+	} */
+
+	/* fmt.Println()
+	fmt.Printf("%+v\n", i) */
+
+	str, ok := i.(string)
+
+	if !ok {
+		fmt.Println("Errrorr Не удалось привести интерфейс к строке")
+	}
+	fmt.Println(len(str))
+}
+
+func main() {
+
+	scheduler := scheduler.NewScheduler()
+
+	var myFloat float64
+	var myBool bool
+	fmt.Println(myFloat, myBool)
+
+	var quantity int = 14
+	var length, width float64
+	var customerName string
+	//quantity = 4
+	length, width = 1.2, 2.4
+	customerName = "Damon Cole"
+	fmt.Println(customerName)
+	fmt.Println("has ordered", quantity, "sheets")
+	fmt.Println("each with an area of")
+	fmt.Println(length*width, "square meters")
+
+	var mm, zz, hh, yy int
+
+	mm, zz, hh, yy = 11, 0, 44, 3
+	fmt.Println(mm, zz, hh, yy)
+
+	b := true
+
+	s := 2.4324234325 + 333
+
+	fmt.Println('z', 'я', true, b, s, 7 >= 10)
+
+	if b {
+		println("get b")
+	}
+
+	var u user.User
+
+	fmt.Println("reflect.TypeOf =", reflect.TypeOf(b))
+	fmt.Println("reflect.TypeOf =", reflect.TypeOf(u))
+	fmt.Println("reflect.TypeOf =", reflect.TypeOf(1.1))
+
+	fmt.Println("Hello\nffff\ttttt\\")
+
+	fmt.Println(math.Ceil(2.75))
+	os.Exit(0)
+
+	src := []string{
+		"hello world!",
+		"i with dot",
+		"'n ijsberg",
+		"here comes O'Brian",
+	}
+	for _, c := range []cases.Caser{
+		cases.Lower(language.Und),
+		cases.Upper(language.Turkish),
+		cases.Title(language.Dutch),
+		cases.Title(language.Und, cases.NoLower),
+	} {
+		fmt.Println()
+		for _, s := range src {
+			fmt.Println(c.String(s))
+		}
+	}
+
+	mystruct.Test()
+
+	//square := shape.Square{10}
+	square := shape.NewSquare(5)
+	//circle := shape.Circle{8}
+	circle := shape.NewCircle(8)
+
+	//fmt.Println(circle);
+
+	PrintShapeArea(square)
+	PrintShapeArea(circle)
+
+	printInterface(square)
+	printInterface(circle)
+	printInterface("423424")
+
+	//os.Exit(0)
+
+	//var a *int;
+
+	user1 := user.NewUser("Petya2", 43, "Male", 86, 189)
+	user2 := user.NewUser("Kolya2", 23, "Male", 76, 180)
+
+	user1.SetName("ch name")
+	fmt.Println()
+	fmt.Println(user1.GetName())
+	fmt.Println(user1.Age.IsAdult())
+
+	user1.PrintUserInfo("Ch name")
+	fmt.Println(user1.GetName())
+	//fmt.Println(user1.name)
+	user2.PrintUserInfo("Ch name")
+
+	os.Exit(0)
+
+	/* printUserInfo(user1);
+	printUserInfo(user2); */
+
+	db2 := NewDumpDatabase()
+	db2.m = map[string]string{
+		"host": "127.0.0.2",
+		"port": "330677",
+	}
+	fmt.Println(db2.m)
+
+	db := DumpDatabase{
+		m: make(map[string]string),
+	}
+
+	db.m["host"] = "127.0.0.1"
+	db.m["port"] = "3306"
+	fmt.Println(db)
+
+	ent2 := NewEntity(1, "test entt", "test descr-on")
+	ent2.PrintEntity()
+	fmt.Printf("%+v\n", ent2)
+
+	var ent Entity
+	fmt.Println(ent)
+	ent = Entity{22, "New Ent", "some description"}
+	fmt.Printf("%+v\n", ent)
+
+	//mystruct.Test();
+
+	/* var user User
+	fmt.Println(user)
+
+	user = User{"Petya", 33, "Male", 82, 181}
+	fmt.Println(user.age) */
+	//fmt.Println(userData);
+
+	/* user := struct{
+		name string
+		age int
+		sex string
+		weight int
+		height int
+	}{
+		"Petya", 33, "Male", 82, 187,
+	} */
+
+	//fmt.Printf("%+v\n", user)
+
+	os.Exit(0)
+
+	users := map[string]int{
+		"Vasya":  23,
+		"Vanya":  23,
+		"Kolya":  47,
+		"Kolyae": 47,
+	}
+
+	users["Andrei"] = 69
+
+	delete(users, "Vasya")
+
+	fmt.Println(len(users))
+
+	var users2 map[string]string
+
+	users2 = make(map[string]string)
+
+	users2["ttt"] = "fsf"
+	fmt.Println(users2)
+
+	for key, value := range users {
+		fmt.Println(key, "is", value)
+	}
+	fmt.Println("-------------------------")
+
+	key, exists := users["Kolya"]
+	if exists {
+		fmt.Println("Kolya is", key)
+	} else {
+		fmt.Println("Such user doesn't exists ")
+	}
+
+	fmt.Println(users)
+	fmt.Println(users["Kolya"])
+	fmt.Println(users["KolyaNot"])
+
+	//panic("Som eoanic");
+
+	defer handlePanic() // ф-ция отслеживает panic, в данном случае
+	// runtime error: index out of range [3] with length 3
+
+	messages1 := []string{
+		"mess 1",
+		"mess 2",
+		"mess 3",
+	}
+
+	messages1[3] = "ddddd"
+
+	fmt.Println("Main()")
+
+	//os.Exit(0)
+
+	/* messages1 := []string{
+		"mess 1",
+		"mess 2",
+		"mess 3",
+	}
+
+
+	messages1[2] = "ddddd";
+
+	for _, value := range messages1 {
+		fmt.Println(value)
+	}
+
+	/* counter3 := 0
+	for {
+		counter3++;
+		fmt.Println(counter3);
+		if counter3 == 20 { break }
+	} */
+
+	//matrix:= [][] int{}
+
+	/* size := 10
+	counter := 0
+	matrix := make([][]int, size)
+
+	for i := 0; i < size; i++ {
+		matrix[i] = make([]int, size)
+		for j := 0; j < size; j++ {
+			//matrix[i] = append(matrix[i], j)
+			counter++
+			matrix[i][j] = counter
+		}
+		fmt.Println(matrix[i])
+	}
+	*/
+	//fmt.Println(matrix);
+
+	/* size = 3
+	matrix2 := make([][]int, size)
+
+	counter:=0
+	for i := 0; i < size; i++ {
+
+		for j := 0; j < size; j++ {
+			//matrix[i] = append(matrix[i], j)
+			//matrix2[j] = make([]int, size)
+			matrix2[j] = []int{-1, -1, -1}
+
+			fmt.Println("Initial=", matrix2[j])
+			//matrix2[j] = []int{i, i, i}
+			matrix2[j][i] = i  // 0 0 => 0
+
+			fmt.Println("Changed=", matrix2[j])
+
+			// Когда i = 0, то меняем 0-е значение слайса matrix2[j] на i (0)
+			// т.е.  {-1, -1, -1} становится {0, -1, -1}
+
+			// Когда i = 1, то меняем 1-е значение слайса matrix2[j] на i (1)
+			// т.е.  {-1, -1, -1} становится {-1, 1, -1}
+
+			counter++;
+
+		}
+		///////fmt.Println("i =  ", i)
+		//fmt.Println(matrix2[i]) // Распечатка слайса
+
+	}
+
+	fmt.Println(counter) // Counter */
+	//fmt.Println(matrix2) // Распечатка матрицы
+
+	//return errors.New("some err")
+	//os.Exit(0)
+
+	//fmt.Println(matrix);
+
+	/* my_mess := make([]string, 5)
+	fmt.Println(len(my_mess))
+
+	arr2 := []string{"test", "2", "3"}
+
+	arr2 = append(arr2, "fsfdsfsd")
+
+
+	fmt.Println(arr2)
+	printMess(arr2)
+	fmt.Println(arr2)
+
+	var arr []string
+	arr = append(arr, "test")
+	arr = append(arr, "test2")
+
+	fmt.Println(arr)
+
+	var pointr *int
+	fmt.Println(pointr)
+
+	smess := "my mess"
+
+	fmt.Println(smess)
+	fmt.Println(changeMess(&smess))
+	fmt.Println(smess)
+
+	f := Par(5)
+
+	fmt.Println(f(10))
+
+	var mp *string
+
+	mp = &som_var
+
+	*mp = "new value of var"
+
+	fmt.Println(som_var)
+
+	fmt.Println("Pointer:", *mp)
+
+	messages := [3]string{"dd", "dde", "qqq"}
+	fmt.Println(messages[0])
+	messages[2] = "changed"
+	fmt.Println(messages)
+
+	var mess_pointer *string
+	test_message := "Some test message"
+
+	mess_pointer = &test_message
+
+	*mess_pointer = "Changed test message"
+	//fmt.Println(*mess_pointer);
+	fmt.Println(test_message)
+
+	message := "I'll be ninja soon"
+
+	//mess_pointer = *message
+	fmt.Println(message)
+
+	//PrintMessage(&message)
+	changeMessage(&message)
+
+	fmt.Println(message) */
+}
+
+func changeMessage(message *string) {
+	*message += "(from function PrintMessage())"
+}
+
+func PrintMessage(messages [3]string) error {
+	//messages[1] = "Ch in func";
+	//*message += "(from function PrintMessage())"
+	//fmt.Println(*message)
+	return errors.New("some err")
+}
